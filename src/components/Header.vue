@@ -69,13 +69,10 @@ export default {
   grid-area: headerWrapper;
   width: 1184px;
   height: 41.88px;
-  margin: 0 auto;
   margin: 0px 159px 120px 97px;
   display: grid;
   grid-auto-flow: column;
   grid-template-areas: 'topLogo topRightSection';
-  // grid-template-columns: 1fr 1.8fr 1.2fr;
-  // gap: 20px;
 }
 .topLogo {
   grid-area: topLogo;

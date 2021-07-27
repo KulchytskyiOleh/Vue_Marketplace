@@ -2,19 +2,19 @@
   <div class="loginPageWrapper">
     <Header />
     <main class="mainSectionWrapper">
-      <form class="loginForm" action="">
+      <form class="loginForm">
         <h2>Login</h2>
         <div class="emailWrapper">
           <label for="email">
             EMAIL
           </label>
-          <input type="email" />
+          <input type="email" placeholder="Example@gmail.com" v-model="userEmail" />
         </div>
         <div class="passwordWrapper">
           <label for="password">PASSWORD</label>
           <div class="passwordInputWrapper">
-            <input type="password" />
-            <i>
+            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" />
+            <i @click="passwordToggle">
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
@@ -27,10 +27,14 @@
           </div>
         </div>
         <p class="passwordReminder">Don’t remember password?</p>
-        <button>Continue</button>
+        <button @click.prevent="loginSubmit">Continue</button>
       </form>
       <div class="noAccountWrapper">
-        <p>I have no account, REGISTER NOW</p>
+        <p>
+          I have no account,
+          <router-link to="/login">REGISTER NOW</router-link>
+        </p>
+        <router-view />
       </div>
     </main>
     <Footer />
@@ -46,12 +50,41 @@ export default {
     Header,
     Footer,
   },
+  data: () => {
+    return {
+      showPassword: false,
+      userEmail: '',
+      userPassword: '',
+      userLoginData: [],
+    };
+  },
+  methods: {
+    passwordToggle() {
+      this.showPassword = !this.showPassword;
+    },
+    loginSubmit() {
+      if (this.userEmail.length > 1 && this.userPassword.length > 1) {
+        this.userLoginData.push({
+          email: this.userEmail,
+          password: this.userPassword,
+        });
+      }
+      this.userEmail = '';
+      this.userPassword = '';
+      // console.log(JSON.stringify(this.userLoginData));
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+}
 .headerWrapper {
   grid-area: headerWrapper;
+  margin-left: 100px;
   margin-bottom: 100px;
 }
 .loginPageWrapper {
@@ -79,10 +112,24 @@ export default {
   grid-template-areas: 'loginSlogan' 'emailWrapper' 'passwordWrapper' 'passwordReminder' 'submitBtn';
   & h2 {
     grid-area: loginSlogan;
-    margin-bottom: 32px;
+    font-family: Helvetica;
+    font-size: 22px;
+    line-height: 25px;
+    letter-spacing: 0px;
   }
   & button {
     grid-area: submitBtn;
+    height: 58px;
+    background: #349a89;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-family: Helvetica;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.4000000059604645px;
+    text-align: center;
+    cursor: pointer;
   }
 }
 .emailWrapper {
@@ -96,13 +143,18 @@ export default {
     justify-self: start;
     grid-area: emailLabel;
     height: 14px;
+    font-family: Helvetica;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.30000001192092896px;
+    text-align: left;
     margin-bottom: 4px;
   }
   & input {
     grid-area: emailInput;
-    height: 58px;
-    color: red;
+    padding: 19px 45px 21px 13px;
     border-radius: 5px;
+    border: 2px solid #dedee0;
   }
 }
 .passwordWrapper {
@@ -114,35 +166,60 @@ export default {
   & label {
     grid-area: passwordLabel;
     justify-self: start;
+    font-family: Helvetica;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.30000001192092896px;
+    text-align: left;
   }
 }
 .passwordInputWrapper {
   grid-area: passwordInputWrapper;
   border-radius: 5px;
   height: 58px;
-  border: 2px solid #DEDEE0;
-;
+  border: 2px solid #dedee0;
   display: grid;
   grid-template-areas: 'passwordInput showPassword';
   gap: 20px;
   grid-template-columns: 0.9fr 0.1fr;
   & input {
     grid-area: passwordInput;
-    height: 56px;
+    padding: 19px 45px 21px 13px;
     border: none;
+    outline: none;
   }
   & i {
     grid-area: showPassword;
     align-self: center;
+    justify-self: start;
+    cursor: pointer;
   }
 }
 .passwordReminder {
   grid-area: passwordReminder;
   margin-bottom: 16px;
+  justify-self: end;
+  font-family: Helvetica;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: center;
+  color: #8c8c8c;
+  cursor: pointer;
 }
 .noAccountWrapper {
   background: #ffffff;
   grid-area: noAccountWrapper;
   border-radius: 7px;
+  display: grid;
+  & p {
+    justify-self: center;
+    align-self: center;
+  }
+  & a {
+    text-decoration: none;
+    color: #349a89;
+    cursor: pointer;
+  }
 }
 </style>
