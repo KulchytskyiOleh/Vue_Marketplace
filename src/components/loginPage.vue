@@ -26,13 +26,14 @@
             </i>
           </div>
         </div>
-        <p class="passwordReminder">Don’t remember password?</p>
-        <button @click.prevent="loginSubmit">Continue</button>
+        <router-link to="/reset" class="passwordReminder">Don’t remember password?</router-link>
+        <button class="loginSubmitBtn" @click.prevent="loginSubmit">Continue</button>
       </form>
+      <!-- <button @click="test">test</button> -->
       <div class="noAccountWrapper">
         <p>
           I have no account,
-          <router-link to="/login">REGISTER NOW</router-link>
+          <router-link to="/register">REGISTER NOW</router-link>
         </p>
         <router-view />
       </div>
@@ -49,6 +50,7 @@ export default {
   components: {
     Header,
     Footer,
+    // registerPage
   },
   data: () => {
     return {
@@ -71,28 +73,29 @@ export default {
       }
       this.userEmail = '';
       this.userPassword = '';
-      // console.log(JSON.stringify(this.userLoginData));
+      console.log(JSON.stringify(this.userLoginData));
+    },
+    test() {
+      console.log(window.location.pathname);
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-}
+// * {
+//   margin: 0;
+//   padding: 0;
+// }
 .headerWrapper {
   grid-area: headerWrapper;
-  margin-left: 100px;
-  margin-bottom: 100px;
 }
 .loginPageWrapper {
   display: grid;
   margin: 0 auto;
   background-color: #f2f2f2;
-  grid-template-areas: '.' 'headerWrapper' '.' 'mainSectionWrapper' '.' 'resetWrapperBottom';
-  grid-template-rows: 18.12px 41.88px 81px 365px 554px 73px;
+  grid-template-areas: 'headerWrapper' '.' 'mainSectionWrapper' '.' 'resetWrapperBottom';
+  // grid-template-rows: 41.88px 81px 365px 554px 73px;
 }
 .mainSectionWrapper {
   display: grid;
@@ -100,8 +103,10 @@ export default {
   margin: 0 auto;
   display: grid;
   width: 425px;
-  grid-template-areas: 'loginForm' '.' 'noAccountWrapper';
-  grid-template-rows: 365px 21px 76px;
+  grid-template-areas: 'loginForm' 'noAccountWrapper';
+  // grid-template-rows: 365px 76px;
+  gap: 21px;
+  margin-bottom: 554px;
 }
 .loginForm {
   display: grid;
@@ -109,7 +114,9 @@ export default {
   border-radius: 7px;
   padding: 25px 23px 21px 24px;
   background: #ffffff;
-  grid-template-areas: 'loginSlogan' 'emailWrapper' 'passwordWrapper' 'passwordReminder' 'submitBtn';
+  box-shadow: 0px 2px 42px 0px #0000001c;
+
+  grid-template-areas: 'loginSlogan' 'emailWrapper' 'passwordWrapper' 'passwordReminder' 'loginSubmitBtn';
   & h2 {
     grid-area: loginSlogan;
     font-family: Helvetica;
@@ -117,26 +124,12 @@ export default {
     line-height: 25px;
     letter-spacing: 0px;
   }
-  & button {
-    grid-area: submitBtn;
-    height: 58px;
-    background: #349a89;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    font-family: Helvetica;
-    font-size: 16px;
-    line-height: 18px;
-    letter-spacing: 0.4000000059604645px;
-    text-align: center;
-    cursor: pointer;
-  }
 }
 .emailWrapper {
   grid-area: emailWrapper;
   width: 377px;
   display: grid;
-  grid-template-areas: 'emailLabel' '.' 'emailInput';
+  grid-template-areas: 'emailLabel' 'emailInput';
   margin-bottom: 15px;
   & label {
     align-self: start;
@@ -171,6 +164,7 @@ export default {
     line-height: 14px;
     letter-spacing: 0.30000001192092896px;
     text-align: left;
+    margin-bottom: 4px;
   }
 }
 .passwordInputWrapper {
@@ -206,12 +200,35 @@ export default {
   text-align: center;
   color: #8c8c8c;
   cursor: pointer;
+  text-decoration: none;
+}
+.loginSubmitBtn {
+  grid-area: loginSubmitBtn;
+  height: 58px;
+  padding: 19px 29px 21px 29px;
+  background: #349a89;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-family: Helvetica;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: center;
+  cursor: pointer;
 }
 .noAccountWrapper {
   background: #ffffff;
   grid-area: noAccountWrapper;
   border-radius: 7px;
   display: grid;
+  padding: 30px 92px 30px 92px;
+  font-family: Helvetica;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: center;
+
   & p {
     justify-self: center;
     align-self: center;

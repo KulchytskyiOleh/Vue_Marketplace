@@ -41,7 +41,7 @@
         SELL
       </button>
       <div>
-        <router-link to="/login">LOGIN</router-link>
+        <router-link to="/">LOGIN</router-link>
       </div>
       <router-view />
       <div class="likedProducts">
@@ -64,12 +64,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scope lang="scss">
 .headerWrapper {
   grid-area: headerWrapper;
   width: 1184px;
   height: 41.88px;
-  margin: 0px 159px 120px 97px;
+  margin: 18px 159px 78px 97px;
   display: grid;
   grid-auto-flow: column;
   grid-template-areas: 'topLogo topRightSection';

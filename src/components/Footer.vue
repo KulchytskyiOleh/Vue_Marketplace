@@ -1,6 +1,6 @@
 <template>
   <footer class="resetWrapperBottom">
-    <p>Copyright © 2017. Privacy Policy.</p>
+    Copyright © 2021. Privacy Policy.
   </footer>
 </template>
 

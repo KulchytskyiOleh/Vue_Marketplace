@@ -30,40 +30,28 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .resetPasswordWrapper {
   margin: 0 auto;
   background-color: #f2f2f2;
   display: grid;
-  grid-template-areas: '.' 'headerWrapper' '.' 'resetPasswordForm' '.' 'resetWrapperBottom';
-  grid-template-rows: 18.12px 41.88px 120px 273px 554px 73px;
+  grid-template-areas: 'headerWrapper' 'resetPasswordForm' 'resetWrapperBottom';
 }
 
 .resetPasswordForm {
   grid-area: resetPasswordForm;
   margin: 0 auto;
-  padding: 21px 26px 27px 25px;
-  width: 425px;
-  height: 273px;
   border-radius: 7px;
   background: #ffffff;
   box-shadow: 0px 2px 42px #0000001c;
-  border-radius: 7px;
   margin-bottom: 553.2px;
+  padding: 21px 26px 27px 25px;
 }
 .resetPasswordFormWrapper {
   display: grid;
-  grid-template-rows: 26px 26px 38px 76px 24px 58px 25px;
-  grid-template-columns: 1fr;
+  width: 377px;
   grid-template-areas:
-    '.'
-    'formSlogan'
-    '.'
-    'emailWrapper'
-    '.'
-    'resetPasswordFormBtn'
-    '.';
+    'formSlogan' 'emailWrapper' 'resetPasswordFormBtn';
 }
 .formSlogan {
   grid-area: formSlogan;
@@ -72,10 +60,9 @@ export default {
   grid-area: emailWrapper;
   height: 76px;
   display: grid;
+  margin-bottom: 24px;
   grid-template-areas:
-    'emailSlogan'
-    '.'
-    'emailInput';
+    'emailSlogan' 'emailInput';
 }
 .emailSlogan {
   grid-area: emailSlogan;
@@ -89,9 +76,8 @@ export default {
   grid-area: emailInput;
   background: #f9fafb;
   border: 1px solid #dedee0;
-  // height: 58px;
   &::placeholder {
-    color: rgba(102, 102, 102, 0.4665);
+    color: #66666677;
   }
   &[type='text'] {
     padding: 19px 45px 21px 13px;
