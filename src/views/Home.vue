@@ -110,7 +110,7 @@
       </section>
       <section class="productsWrapper">
         <div class="productWrapper" v-for="product in products" :key="product.id">
-          <img src="@/img/Mask1.png" alt="image" />
+          <img :src="product.image" alt="image" />
           <div class="productInfo">
             <span class="likedPlace" @click="likedToggle(product.id)" v-if="product.liked">
               <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
