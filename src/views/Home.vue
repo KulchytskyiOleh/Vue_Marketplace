@@ -41,7 +41,7 @@
           </i>
         </div>
         <div class="rightSection">
-          <button @click="test">Sell {{ likedCounter }}</button>
+          <button>Sell {{ likedCounter }}</button>
           <router-link to="/login">Login</router-link>
           <i class="likedProducts">
             <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,18 @@
               <path d="M10.7646 11.6667L14.7577 15.7522" stroke="#5C5C5C" stroke-width="3" stroke-linecap="round" />
             </svg>
           </i>
-          <input type="text" placeholder="Search products by name" />
+          <input v-model.trim="searchWords" type="text" @input="search" placeholder="Search products by name" />
+          <ul v-if="searchWords.length >= 1" class="searchItemsWrapper">
+            <li v-for="item in searchItemsArray" :key="item.id">
+              <div class="searchProductWrapper">
+                <img :src="item.image" />
+                <div class="searchProductsInfo">
+                  <p class="searchProductTitle">{{ item.title }}</p>
+                  <p class="searchProductPice">{{ item.price }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
         <div class="locationWrapper">
           <i>
@@ -104,9 +115,9 @@
             <option value="Choose Category">Choose Category</option>
           </select>
         </div>
-        <input type="number" placeholder="Price from (USD)" min="0" />
+        <input v-model="startPrice" type="number" placeholder="Price from (USD)" min="0" />
         <p>-</p>
-        <input type="number" placeholder="Price to (USD)" min="0" />
+        <input v-model="endPrice" type="number" placeholder="Price to (USD)" @input="sortedByPrice" min="0" />
       </section>
       <section class="productsWrapper">
         <div class="productWrapper" v-for="product in products" :key="product.id">
@@ -131,7 +142,7 @@
               </svg>
             </span>
             <span class="itemName">{{ product.title }}</span>
-            <span class="itemPrice">{{ product.price }}</span>
+            <span class="itemPrice">{{ '$' + product.price }}</span>
           </div>
         </div>
       </section>
@@ -146,7 +157,6 @@
 // import ResetPassword from '@/components/ResetPassword.vue'
 import Footer from '@/components/Footer.vue';
 import data from '/src/views/data';
-// import img from '/src/img'
 
 export default {
   name: 'Home',
@@ -158,6 +168,10 @@ export default {
     return {
       products: data,
       likedProductsCount: 0,
+      searchWords: '',
+      searchItemsArray: [],
+      startPrice: '',
+      endPrice: '',
     };
   },
   computed: {
@@ -171,10 +185,30 @@ export default {
       });
       return result;
     },
+    // searchItems() {
+    //   this.products.filter((el) => {
+    //     if (el.title.includes(`${this.searchWords}`)) {
+    //       return searchItemsArray.push(el);
+    //     }
+    //   });
+    //   return searchItemsArray;
+    // },
   },
   methods: {
-    test() {
-      console.log(this.products);
+    sortedByPrice() {
+      let sortedArray = [];
+      console.clear();
+      if (this.startPrice > this.endPrice) return;
+      this.products.filter((el) => {
+        if (el.price >= this.startPrice && el.price <= this.endPrice) {
+          sortedArray.push(el);
+        }
+      });
+      sortedArray.sort((a, b) => {
+        return a.price - b.price;
+      });
+      sortedArray.forEach((el) => console.log(el.title, '-', el.price));
+      // console.log(sortedArray);
     },
     likedToggle(id) {
       this.products.map((el) => {
@@ -193,6 +227,15 @@ export default {
         return result;
       });
       this.likedProductsCount = result;
+    },
+    search() {
+      this.searchItemsArray = [];
+      if (!this.searchWords.length) return;
+      this.products.filter((el) => {
+        if (el.title.toLowerCase().includes(`${this.searchWords}`)) {
+          return this.searchItemsArray.push(el);
+        }
+      });
     },
   },
 };
@@ -238,7 +281,7 @@ export default {
     line-height: 31px;
     width: 131px;
     letter-spacing: 0px;
-    padding: 0px 46px 0px 50px;
+    // padding: 0px 46px 0px 50px;
     border: none;
     justify-self: end;
     grid-area: sellButton;
@@ -265,6 +308,7 @@ export default {
 }
 .searchWrapper {
   display: grid;
+  position: relative;
   grid-auto-flow: column;
   width: 467px;
   background: #ffffff;
@@ -288,6 +332,49 @@ export default {
     outline: none;
   }
 }
+.searchItemsWrapper {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  box-shadow: 0px 4px 25px 0px #00000040;
+  background: #ffffff;
+  list-style-type: none;
+  border-top: 1px solid #dedee0;
+}
+.searchProductWrapper {
+  display: grid;
+  margin: 5px;
+  grid-auto-flow: row;
+  cursor: pointer;
+  grid-template-areas: 'searchImg searchProductsInfo';
+  grid-template-columns: 0.2fr 0.5fr;
+  gap: 10px;
+  & img {
+    grid-area: searchImg;
+    width: 100%;
+    height: 100%;
+  }
+}
+.searchProductsInfo {
+  display: grid;
+  grid-template-areas: 'searchProductTitle' 'searchProductPice';
+}
+.searchProductTitle {
+  grid-area: searchProductTitle;
+  justify-self: start;
+}
+.searchProductPice {
+  grid-area: searchProductPice;
+  justify-self: start;
+}
+
 .locationWrapper {
   background: #ffffff;
   border-radius: 4px;
@@ -393,6 +480,9 @@ export default {
   gap: 7px;
   justify-items: start;
   margin-left: 12px;
+}
+.itemPrice {
+  font-weight: bold;
 }
 .likedPlace {
   position: absolute;
