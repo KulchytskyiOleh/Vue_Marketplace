@@ -2,22 +2,21 @@
   <div class="registerPageWrapper">
     <Header />
     <main class="mainContentWrapper">
-      <form class="registerFormWrapper">
+      <form class="registerFormWrapper" @submit.prevent="registerSubmit">
         <h2>Register</h2>
         <div class="emailWrapper">
           <label for="">EMAIL</label>
-          <input type="email" />
+          <input type="email" v-model="userEmail" required minlength="11" />
         </div>
         <div class="fullNameWrapper">
           <label for="">FULL NAME</label>
-          <input type="text" />
+          <input type="text" v-model="userFullName" required minlength="6" />
         </div>
         <div class="passwordWrapper">
           <label for="">PASSWORD</label>
-
           <div class="passwordInputWrapper">
             <!-- <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" /> -->
-            <input type="password" />
+            <input type="password" v-model="userPassword" required minlength="6" />
             <!-- <i @click="passwordToggle"> -->
             <i>
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +34,7 @@
           <label for="">PASSWORD AGAIN</label>
           <div class="passwordInputWrapper">
             <!-- <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" /> -->
-            <input type="password" />
+            <input type="password" v-model="submitUserPassword" @input="passwordCheck" required minlength="6" />
             <!-- <i @click="passwordToggle"> -->
             <i>
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +48,7 @@
             </i>
           </div>
         </div>
-        <button class="registerFormSubmit">Register</button>
+        <button class="registerFormSubmit" type="submit">Register</button>
       </form>
       <section class="hasAccountWrapper">
         <p>
@@ -69,17 +68,57 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import axios from 'axios';
+
 export default {
+  name: 'registerPage',
   components: {
     Header,
     Footer,
   },
-  name: 'registerPage',
+  data: () => {
+    return {
+      userEmail: '',
+      userFullName: '',
+      userPassword: '',
+      submitUserPassword: '',
+      userData: [],
+      success: false,
+    };
+  },
+  // computed: {},
+  methods: {
+    registerSubmit() {
+      this.passwordCheck();
+      if (this.success) {
+        axios
+          .post('https://agile-everglades-70301.herokuapp.com/api/register', {
+            email: `${this.userEmail}`,
+            name: `${this.userFullName}`,
+            password: `${this.userPassword}`,
+          })
+          .then((resp) => console.log('resp data', resp.data))
+          .catch((err) => console.log(err, 'err'));
+        this.userEmail = '';
+        this.userFullName = '';
+        this.userPassword = '';
+        this.submitUserPassword = '';
+      }
+    },
+    passwordCheck() {
+      // if (this.userEmail.length < 11) return this.success;
+      // if (this.userFullName.length < 6) return this.success;
+      // if (this.userPassword.length < 6) return this.success;
+      // if (this.submitUserPassword.length < 6) return this.success;
+      if (!this.userEmail || !this.userFullName || !this.userPassword || !this.submitUserPassword) return this.success;
+      if (this.userPassword !== this.submitUserPassword) return this.success;
+      if (this.userPassword === this.submitUserPassword) return (this.success = true);
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-
 .registerPageWrapper {
   display: grid;
   grid-template-areas: 'headerWrapper' 'mainContentWrapper' 'resetWrapperBottom';

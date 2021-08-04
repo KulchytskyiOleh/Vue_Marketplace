@@ -45,6 +45,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -61,6 +62,9 @@ export default {
     };
   },
   methods: {
+    test() {
+      axios.get('https://jsonplaceholder.typicode.com/users').then((resp) => console.log(resp.data));
+    },
     passwordToggle() {
       this.showPassword = !this.showPassword;
     },
@@ -74,10 +78,11 @@ export default {
       this.userEmail = '';
       this.userPassword = '';
       console.log(JSON.stringify(this.userLoginData));
+      // axios.post('')
     },
-    test() {
-      console.log(window.location.pathname);
-    },
+  },
+  mounted() {
+    // this.test();
   },
 };
 </script>
