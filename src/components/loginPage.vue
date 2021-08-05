@@ -2,18 +2,16 @@
   <div class="loginPageWrapper">
     <Header />
     <main class="mainSectionWrapper">
-      <form class="loginForm">
+      <form class="loginForm" @submit.prevent="loginSubmit">
         <h2>Login</h2>
         <div class="emailWrapper">
-          <label for="email">
-            EMAIL
-          </label>
-          <input type="email" placeholder="Example@gmail.com" v-model="userEmail" />
+          <label for="email"> EMAIL </label>
+          <input type="email" placeholder="Example@gmail.com" v-model="userEmail" required minlength="10" />
         </div>
         <div class="passwordWrapper">
           <label for="password">PASSWORD</label>
           <div class="passwordInputWrapper">
-            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" />
+            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" required minlength="6"/>
             <i @click="passwordToggle">
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -27,7 +25,7 @@
           </div>
         </div>
         <router-link to="/reset" class="passwordReminder">Don’t remember password?</router-link>
-        <button class="loginSubmitBtn" @click.prevent="loginSubmit">Continue</button>
+        <button class="loginSubmitBtn" type="submit">Continue</button>
       </form>
       <!-- <button @click="test">test</button> -->
       <div class="noAccountWrapper">
@@ -59,31 +57,45 @@ export default {
       userEmail: '',
       userPassword: '',
       userLoginData: [],
+      successLogin: false,
+      userError: '',
     };
   },
   methods: {
-    test() {
-      axios.get('https://jsonplaceholder.typicode.com/users').then((resp) => console.log(resp.data));
-    },
+    // test() {},
     passwordToggle() {
       this.showPassword = !this.showPassword;
     },
     loginSubmit() {
-      if (this.userEmail.length > 1 && this.userPassword.length > 1) {
-        this.userLoginData.push({
-          email: this.userEmail,
-          password: this.userPassword,
-        });
+      this.userValidation();
+      if (this.successLogin) {
+        if (this.userEmail.length > 1 && this.userPassword.length > 1) {
+          axios
+            .post('https://agile-everglades-70301.herokuapp.com/api/login', {
+              email: this.userEmail,
+              password: this.userPassword,
+            })
+            .then((resp) => console.log('resp data', resp.data))
+            .catch((err) => console.log(err, 'error'));
+        }
+        this.userEmail = '';
+        this.userPassword = '';
       }
-      this.userEmail = '';
-      this.userPassword = '';
-      console.log(JSON.stringify(this.userLoginData));
-      // axios.post('')
+    },
+    userValidation() {
+      if (this.userEmail.length < 11 || this.userPassword.length < 6) return this.successLogin, (this.userError = 'to short login or password');
+      if (!this.userEmail || !this.userPassword) return this.successLogin;
+      if (!this.userEmail) {
+        return (this.userError = 'need to fill this field');
+      }
+      if (!this.userPassword) {
+        return (this.userError = 'need to fill this field');
+      } else {
+        this.successLogin = true;
+      }
     },
   },
-  mounted() {
-    // this.test();
-  },
+  mounted() {},
 };
 </script>
 

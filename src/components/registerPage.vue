@@ -15,10 +15,10 @@
         <div class="passwordWrapper">
           <label for="">PASSWORD</label>
           <div class="passwordInputWrapper">
-            <!-- <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" /> -->
-            <input type="password" v-model="userPassword" required minlength="6" />
-            <!-- <i @click="passwordToggle"> -->
-            <i>
+            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" required minlength="6" />
+            <!-- <input type="password" v-model="userPassword"  /> -->
+            <i @click="showPasswordToggle()">
+              <!-- <i> -->
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
@@ -33,10 +33,10 @@
         <div class="passwordAgainWrapper">
           <label for="">PASSWORD AGAIN</label>
           <div class="passwordInputWrapper">
-            <!-- <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" /> -->
-            <input type="password" v-model="submitUserPassword" @input="passwordCheck" required minlength="6" />
-            <!-- <i @click="passwordToggle"> -->
-            <i>
+            <input :type="showPasswordAgain ? 'text' : 'password'" v-model="submitUserPassword" required minlength="6" />
+            <!-- <input type="password" v-model="submitUserPassword" @input="passwordCheck" required minlength="6" /> -->
+            <i @click="showPasswordToggle('showPasswordAgain')">
+              <!-- <i> -->
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
@@ -84,10 +84,15 @@ export default {
       submitUserPassword: '',
       userData: [],
       success: false,
+      showPassword: false,
+      showPasswordAgain: false,
     };
   },
   // computed: {},
   methods: {
+    showPasswordToggle(type = 'showPassword') {
+      this[type] = !this[type];
+    },
     registerSubmit() {
       this.passwordCheck();
       if (this.success) {
