@@ -2,7 +2,7 @@
   <div class="submitNewPasswordWrapper">
     <Header />
     <main class="mainSectionWrapper">
-      <form class="newPasswordForm" @submit.prevent="loginSubmit">
+      <form class="newPasswordForm" @submit.prevent="registerSubmit">
         <h2>Set new password</h2>
         <div class="newPasswordWrapper">
           <label for="password"> NEW PASSWORD</label>
@@ -71,29 +71,31 @@ export default {
       this.passwordCheck();
       if (this.success) {
         axios
-          .post('https://agile-everglades-70301.herokuapp.com/api/', {
+          .post('https://agile-everglades-70301.herokuapp.com/api/restorePass', {
+            token: this.$route.params.token,
             password: `${this.newUserPassword}`,
           })
-          .then((resp) => console.log('resp data', resp.data))
+          .then((resp) => {this.$router.push('/login')})
           .catch((err) => console.log(err, 'err'));
         this.newUserPassword = '';
         this.submitUserPassword = '';
       }
     },
     passwordCheck() {
-      if (this.userPassword.length < 6) return this.success;
+      if (this.newUserPassword.length < 6) return this.success;
       if (this.submitUserPassword.length < 6) return this.success;
       if (!this.newUserPassword || !this.submitUserPassword) return this.success;
       if (this.newUserPassword !== this.submitUserPassword) return this.success;
       if (this.newUserPassword === this.submitUserPassword) return (this.success = true);
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$route.params.token);
+  },
 };
 </script>
 
 <style scoped lang="scss">
-
 .headerWrapper {
   grid-area: headerWrapper;
 }

@@ -31,7 +31,7 @@ const routes = [
     component: registerPage,
   },
   {
-    path: '/new-password',
+    path: '/new-password/:token?',
     name: 'new-password',
     component: SubmitNewPassword,
   },
