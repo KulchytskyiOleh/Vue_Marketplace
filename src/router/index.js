@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import loginPage from '../components/loginPage';
 import registerPage from '../components/registerPage';
 import ResetPassword from '../components/ResetPassword';
+import SubmitNewPassword from '../components/SubmitNewPassword';
 import axios from 'axios';
 
 Vue.use(VueRouter);
@@ -28,6 +29,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: registerPage,
+  },
+  {
+    path: '/new-password',
+    name: 'new-password',
+    component: SubmitNewPassword,
   },
   {
     path: '/about',

@@ -1,16 +1,16 @@
 <template>
   <div class="resetPasswordWrapper">
     <Header />
-    <main class="resetPasswordForm">
+    <form class="resetPasswordForm" @submit.prevent="resetPassword">
       <div class="resetPasswordFormWrapper">
         <h2 class="formSlogan">Restore Password</h2>
         <div class="emailWrapper">
           <p class="emailSlogan">EMAIL</p>
-          <input class="emailInput" type="text" placeholder="Example@gmail.com" />
+          <input class="emailInput" type="text" v-model="userEmail" placeholder="Example@gmail.com" required minlength="8" />
         </div>
-        <button class="resetPasswordFormBtn">Continue</button>
+        <button class="resetPasswordFormBtn" type="submit">Continue</button>
       </div>
-    </main>
+    </form>
     <Footer />
   </div>
 </template>
@@ -18,6 +18,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import axios from 'axios';
 export default {
   name: 'ResetPassword',
   props: {
@@ -26,6 +27,33 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  data: () => {
+    return {
+      userEmail: '',
+      success: false,
+      errorText: '',
+    };
+  },
+  methods: {
+    resetPassword() {
+      this.passwordCheck();
+      if (this.success) {
+        axios
+          .post('https://agile-everglades-70301.herokuapp.com/api/restoreEmail', {
+            email: `${this.userEmail}`,
+          })
+          .then((resp) => console.log('resp data', resp.data))
+          .catch((err) => console.log(err, 'err'));
+        this.userEmail = '';
+      }
+    },
+    passwordCheck() {
+      if (!this.userEmail) return this.success;
+      if (this.userEmail.length < 6) return this.success;
+      if (!this.userEmail.includes('@')) return this.success, console.log('email need to contains @ symbol');
+      if (this.userEmail.includes('@')) return (this.success = true);
+    },
   },
 };
 </script>
@@ -50,8 +78,7 @@ export default {
 .resetPasswordFormWrapper {
   display: grid;
   width: 377px;
-  grid-template-areas:
-    'formSlogan' 'emailWrapper' 'resetPasswordFormBtn';
+  grid-template-areas: 'formSlogan' 'emailWrapper' 'resetPasswordFormBtn';
 }
 .formSlogan {
   grid-area: formSlogan;
@@ -61,8 +88,7 @@ export default {
   height: 76px;
   display: grid;
   margin-bottom: 24px;
-  grid-template-areas:
-    'emailSlogan' 'emailInput';
+  grid-template-areas: 'emailSlogan' 'emailInput';
 }
 .emailSlogan {
   grid-area: emailSlogan;
@@ -101,5 +127,4 @@ export default {
   text-align: center;
   cursor: pointer;
 }
-
 </style>

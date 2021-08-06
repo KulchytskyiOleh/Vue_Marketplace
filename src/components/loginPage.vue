@@ -62,7 +62,6 @@ export default {
     };
   },
   methods: {
-    // test() {},
     passwordToggle() {
       this.showPassword = !this.showPassword;
     },
