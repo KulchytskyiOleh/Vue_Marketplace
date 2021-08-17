@@ -48,6 +48,7 @@ export default {
         this.userEmail = '';
       }
     },
+    // test
     passwordCheck() {
       if (!this.userEmail) return this.success;
       if (this.userEmail.length < 6) return this.success;
