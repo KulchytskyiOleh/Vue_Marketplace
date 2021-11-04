@@ -7,9 +7,20 @@
         <div class="newPasswordWrapper">
           <label for="password"> NEW PASSWORD</label>
           <div class="newPasswordInputWrapper">
-            <input :type="showNewPassword ? 'text' : 'password'" v-model="newUserPassword" required minlength="6" />
+            <input
+              :type="showNewPassword ? 'text' : 'password'"
+              v-model="newUserPassword"
+              required
+              minlength="6"
+            />
             <i @click="showPasswordToggle()">
-              <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="16"
+                viewBox="0 0 24 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -23,9 +34,20 @@
         <div class="submitPasswordWrapper">
           <label for="password">SUBMIT PASSWORD</label>
           <div class="submitPasswordInputWrapper">
-            <input :type="showSubmitTedPassword ? 'text' : 'password'" v-model="submitUserPassword" required minlength="6" />
+            <input
+              :type="showSubmitTedPassword ? 'text' : 'password'"
+              v-model="submitUserPassword"
+              required
+              minlength="6"
+            />
             <i @click="showPasswordToggle('showSubmitTedPassword')">
-              <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="16"
+                viewBox="0 0 24 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -44,9 +66,9 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
-import axios from 'axios';
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -57,39 +79,49 @@ export default {
     return {
       showNewPassword: false,
       showSubmitTedPassword: false,
-      newUserPassword: '',
-      submitUserPassword: '',
+      newUserPassword: "",
+      submitUserPassword: "",
       successLogin: false,
-      userError: '',
+      userError: "",
     };
   },
   methods: {
-    showPasswordToggle(type = 'showNewPassword') {
+    showPasswordToggle(type = "showNewPassword") {
       this[type] = !this[type];
     },
     registerSubmit() {
       this.passwordCheck();
       if (this.success) {
         axios
-          .post('https://agile-everglades-70301.herokuapp.com/api/restorePass', {
-            token: this.$route.params.token,
-            password: `${this.newUserPassword}`,
+          .post(
+            "https://agile-everglades-70301.herokuapp.com/api/restorePass",
+            {
+              token: this.$route.params.token,
+              password: `${this.newUserPassword}`,
+            }
+          )
+          .then((resp) => {
+            if (resp.data) {
+              this.newUserPassword = "";
+              this.submitUserPassword = "";
+            }
+            this.$router.push("/login");
           })
-          .then((resp) => {this.$router.push('/login')})
-          .catch((err) => console.log(err, 'err'));
-        this.newUserPassword = '';
-        this.submitUserPassword = '';
+          .catch((err) => console.log(err, "err"));
       }
     },
     passwordCheck() {
       if (this.newUserPassword.length < 6) return this.success;
       if (this.submitUserPassword.length < 6) return this.success;
-      if (!this.newUserPassword || !this.submitUserPassword) return this.success;
+      if (!this.newUserPassword || !this.submitUserPassword)
+        return this.success;
       if (this.newUserPassword !== this.submitUserPassword) return this.success;
-      if (this.newUserPassword === this.submitUserPassword) return (this.success = true);
+      if (this.newUserPassword === this.submitUserPassword)
+        return (this.success = true);
     },
   },
   mounted() {
+    console.log(localStorage.getItem("userEmail"));
     console.log(this.$route.params.token);
   },
 };
@@ -103,7 +135,7 @@ export default {
   display: grid;
   margin: 0 auto;
   background-color: #f2f2f2;
-  grid-template-areas: 'headerWrapper' '.' 'mainSectionWrapper' '.' 'resetWrapperBottom';
+  grid-template-areas: "headerWrapper" "." "mainSectionWrapper" "." "resetWrapperBottom";
   // grid-template-rows: 41.88px 81px 365px 554px 73px;
 }
 .mainSectionWrapper {
@@ -112,7 +144,7 @@ export default {
   margin: 0 auto;
   display: grid;
   width: 425px;
-  grid-template-areas: 'newPasswordForm';
+  grid-template-areas: "newPasswordForm";
   // grid-template-rows: 365px 76px;
   gap: 21px;
   margin-bottom: 554px;
@@ -125,7 +157,7 @@ export default {
   background: #ffffff;
   box-shadow: 0px 2px 42px 0px #0000001c;
 
-  grid-template-areas: 'newPasswordSlogan' 'newPasswordWrapper' 'submitPasswordWrapper' 'loginSubmitBtn';
+  grid-template-areas: "newPasswordSlogan" "newPasswordWrapper" "submitPasswordWrapper" "loginSubmitBtn";
   & h2 {
     grid-area: newPasswordSlogan;
     font-family: Helvetica;
@@ -140,7 +172,7 @@ export default {
   display: grid;
   margin-bottom: 5px;
   width: 377px;
-  grid-template-areas: 'passwordLabel' '.' 'newPasswordInputWrapper';
+  grid-template-areas: "passwordLabel" "." "newPasswordInputWrapper";
   & label {
     grid-area: passwordLabel;
     justify-self: start;
@@ -158,7 +190,7 @@ export default {
   height: 58px;
   border: 2px solid #dedee0;
   display: grid;
-  grid-template-areas: 'passwordInput showPassword';
+  grid-template-areas: "passwordInput showPassword";
   gap: 20px;
   grid-template-columns: 0.9fr 0.1fr;
   & input {
@@ -179,7 +211,7 @@ export default {
   display: grid;
   margin-bottom: 5px;
   width: 377px;
-  grid-template-areas: 'passwordLabel' '.' 'submitPasswordInputWrapper';
+  grid-template-areas: "passwordLabel" "." "submitPasswordInputWrapper";
   margin-bottom: 20px;
   & label {
     grid-area: passwordLabel;
@@ -198,7 +230,7 @@ export default {
   height: 58px;
   border: 2px solid #dedee0;
   display: grid;
-  grid-template-areas: 'passwordInput showPassword';
+  grid-template-areas: "passwordInput showPassword";
   gap: 20px;
   grid-template-columns: 0.9fr 0.1fr;
   & input {

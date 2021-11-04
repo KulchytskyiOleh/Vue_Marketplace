@@ -4,7 +4,13 @@
       <div class="headerTopSection">
         <div class="leftSection">
           <i class="headerLogo">
-            <svg width="102" height="42" viewBox="0 0 102 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="102"
+              height="42"
+              viewBox="0 0 102 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M17.0382 26.9963C15.6757 28.7668 13.5618 29.904 11.1805 29.904H11.1551C8.76107 29.904 6.63448 28.7409 5.28467 26.9575L11.1678 21.0129L17.0382 26.9963Z"
                 fill="#349A89"
@@ -45,7 +51,13 @@
           <router-link to="/login">Login</router-link>
           <i class="likedProducts" @click="showLikedToggle">
             <template v-if="!this.showLiked">
-              <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="20"
+                height="19"
+                viewBox="0 0 20 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -55,7 +67,13 @@
               </svg>
             </template>
             <template v-else-if="this.showLiked">
-              <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="20"
+                height="19"
+                viewBox="0 0 20 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M18.383 1.6169C17.3937 0.638047 15.968 0.0105307 14.468 0.0105307C13.585 0.0105307 12.7552 0.212524 11.9575 0.616969C11.1595 1.02115 10.5107 1.57422 10 2.27641C9.48938 1.57422 8.84049 1.02115 8.04255 0.616936C7.24458 0.212524 6.41484 0.010498 5.53199 0.010498C4.03206 0.010498 2.60657 0.638047 1.61706 1.61687C0.627745 2.59553 0 4.02102 0 5.52118C0 6.55292 0.219216 7.55445 0.489314 8.30841C0.623431 8.6822 0.826111 9.08729 1.09572 9.49991C1.36853 9.91726 1.61703 10.2659 1.82967 10.5423C2.04255 10.819 2.34575 11.1648 2.7552 11.5636C3.16484 11.9628 3.49984 12.2764 3.74448 12.4997C3.98912 12.7233 4.36134 13.0533 4.85088 13.4786C5.41441 13.9681 5.81634 14.3326 6.07438 14.5636C6.32696 14.7899 6.69147 15.138 7.1701 15.5956C8.13827 16.5208 8.84863 17.3735 9.52111 18.3508C9.6466 18.5333 9.80843 18.6168 9.99974 18.6168C10.202 18.6168 10.3769 18.5351 10.4997 18.3508C10.9303 17.7051 11.4279 17.0447 12.0103 16.3933C12.5981 15.7361 13.0875 15.2261 13.4785 14.8614C13.8748 14.4919 14.4444 13.9763 15.1807 13.319C15.6359 12.9123 15.9997 12.6062 16.2446 12.3829C16.4892 12.1594 16.8084 11.8509 17.2021 11.4574C17.5957 11.0636 17.9068 10.7252 18.1276 10.4465C18.3537 10.1615 18.5925 9.81671 18.8616 9.40413C19.4115 8.56145 19.6523 7.89422 19.8509 6.95736C19.9498 6.48984 19.9998 6.0105 19.9998 5.52122C20 4.02102 19.3723 2.59553 18.383 1.6169Z"
                   fill="white"
@@ -68,7 +86,13 @@
       <div class="headerBottomSection">
         <div class="searchWrapper">
           <i>
-            <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="17"
+              height="18"
+              viewBox="0 0 17 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M7.23782 13.1718C10.4389 13.1718 12.9756 10.5265 12.9756 7.33592C12.9756 4.14538 10.4389 1.5 7.23782 1.5C4.03674 1.5 1.5 4.14538 1.5 7.33592C1.5 10.5265 4.03674 13.1718 7.23782 13.1718Z"
                 fill="white"
@@ -76,10 +100,20 @@
                 stroke="#5C5C5C"
                 stroke-width="3"
               />
-              <path d="M10.7646 11.6667L14.7577 15.7522" stroke="#5C5C5C" stroke-width="3" stroke-linecap="round" />
+              <path
+                d="M10.7646 11.6667L14.7577 15.7522"
+                stroke="#5C5C5C"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
             </svg>
           </i>
-          <input v-model.trim="searchWords" type="text" @input="search" placeholder="Search products by name" />
+          <input
+            v-model.trim="searchWords"
+            type="text"
+            @input="search"
+            placeholder="Search products by name"
+          />
           <ul v-if="searchWords.length >= 1" class="searchItemsWrapper">
             <li v-for="item in searchItemsArray" :key="item.id">
               <div class="searchProductWrapper">
@@ -94,7 +128,13 @@
         </div>
         <div class="locationWrapper">
           <i>
-            <svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="13"
+              height="19"
+              viewBox="0 0 13 19"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
@@ -105,7 +145,9 @@
           </i>
           <input type="text" placeholder="Location" />
         </div>
-        <button @click="likedProductsCounter" class="headerSearchBtn">Search</button>
+        <button @click="likedProductsCounter" class="headerSearchBtn">
+          Search
+        </button>
       </div>
     </header>
     <main class="mainContent">
@@ -113,7 +155,13 @@
         <section class="sortWrapper">
           <div class="categoryWrapper">
             <i>
-              <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
@@ -122,29 +170,74 @@
                 />
               </svg>
             </i>
-            <select name="category" @change="sortedByCategory" v-model="selectedCategory">
+            <select
+              name="category"
+              @change="sortedByCategory"
+              v-model="selectedCategory"
+            >
               <option selected disabled value="">Choose Category</option>
-              <option v-for="item in category" :value="item.title" :key="item.id">{{ item.title }}</option>
+              <option
+                v-for="item in category"
+                :value="item.title"
+                :key="item.id"
+              >
+                {{ item.title }}
+              </option>
             </select>
           </div>
-          <input v-model="startPrice" type="number" placeholder="Price from (USD)" min="0" />
+          <input
+            v-model="startPrice"
+            type="number"
+            placeholder="Price from (USD)"
+            min="0"
+          />
           <p>-</p>
-          <input v-model="endPrice" type="number" placeholder="Price to (USD)" @input="sortedByPrice" min="0" />
+          <input
+            v-model="endPrice"
+            type="number"
+            placeholder="Price to (USD)"
+            @input="sortedByPrice"
+            min="0"
+          />
         </section>
         <section class="productsWrapper">
-          <div class="productWrapper" v-for="product in products" :key="product.id">
+          <div
+            class="productWrapper"
+            v-for="product in products"
+            :key="product.id"
+          >
             <img :src="product.image" alt="image" />
             <div class="productInfo">
-              <span class="likedPlace" @click="likedToggle(product.id)" v-if="product.liked">
-                <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span
+                class="likedPlace"
+                @click="likedToggle(product.id)"
+                v-if="product.liked"
+              >
+                <svg
+                  width="17"
+                  height="15"
+                  viewBox="0 0 17 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M15.4836 1.48538C13.5751 -0.386848 10.5328 -0.489899 8.5 1.18016C6.46802 -0.489112 3.42566 -0.386848 1.51637 1.48538C0.538066 2.44509 0 3.72024 0 5.078C0 6.43576 0.538066 7.7117 1.51637 8.67062L7.59307 14.6318C7.84326 14.8773 8.17203 15 8.5 15C8.82797 15 9.15674 14.8773 9.40693 14.6318L15.4836 8.67062C16.4619 7.7117 17 6.43654 17 5.078C17 3.72024 16.4619 2.4443 15.4836 1.48538Z"
                     fill="#349A89"
                   />
                 </svg>
               </span>
-              <span class="likedPlace" @click="likedToggle(product.id)" v-else-if="!product.liked">
-                <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <span
+                class="likedPlace"
+                @click="likedToggle(product.id)"
+                v-else-if="!product.liked"
+              >
+                <svg
+                  width="17"
+                  height="15"
+                  viewBox="0 0 17 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -154,7 +247,7 @@
                 </svg>
               </span>
               <span class="itemName">{{ product.title }}</span>
-              <span class="itemPrice">{{ '$ ' + product.price }}</span>
+              <span class="itemPrice">{{ "$ " + product.price }}</span>
             </div>
           </div>
         </section>
@@ -171,13 +264,13 @@
 <script>
 // @ is an alias to /src
 // import ResetPassword from '@/components/ResetPassword.vue'
-import Footer from '@/components/Footer.vue';
-import Liked from '@/components/Liked';
-import data, { category } from '/src/views/data';
+import Footer from "@/components/Footer.vue";
+import Liked from "@/components/Liked";
+import data, { category } from "/src/views/data";
 // import category from '/src/views/data';
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Footer,
     Liked,
@@ -189,11 +282,11 @@ export default {
       likedProductsCount: 0,
       likedProductsArray: [],
       searchItemsArray: [],
-      selectedCategory: '',
-      searchWords: '',
-      startPrice: '',
+      selectedCategory: "",
+      searchWords: "",
+      startPrice: "",
       showLiked: false,
-      endPrice: '',
+      endPrice: "",
       category,
     };
   },
@@ -237,13 +330,13 @@ export default {
       sortedArray.sort((a, b) => {
         return a.price - b.price;
       });
-      sortedArray.forEach((el) => console.log(el.title, '-', el.price));
+      sortedArray.forEach((el) => console.log(el.title, "-", el.price));
     },
     sortedByCategory() {
       console.clear();
       this.products.filter((prod) => {
         if (prod.category.includes(this.selectedCategory)) {
-          console.log(prod.title, '-with category-', prod.category);
+          console.log(prod.title, "-with category-", prod.category);
         }
       });
     },
@@ -280,6 +373,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+// $test-variable: #ff0000;
+// %message {
+//   border: 1px solid #ff0000;
+//   padding: 10px;
+//   color: blue;
+// }
 .homeWrapper {
   width: 1440px;
   margin: 0 auto;
@@ -309,7 +408,7 @@ export default {
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  grid-template-areas: '. sellButton loginLink likedProducts';
+  grid-template-areas: ". sellButton loginLink likedProducts";
   grid-template-columns: 1.7fr 0.5fr 0.3fr 0.2fr;
   & button {
     background: #349a89;
@@ -320,6 +419,7 @@ export default {
     line-height: 31px;
     width: 131px;
     border: none;
+    // @extend %message;
     justify-self: end;
     grid-area: sellButton;
   }
@@ -351,7 +451,7 @@ export default {
   background: #ffffff;
   border-radius: 4px;
   margin-right: 7px;
-  grid-template-areas: 'searchIcon searchInput';
+  grid-template-areas: "searchIcon searchInput";
   grid-template-columns: 0.3fr 2.6fr;
   & i {
     grid-area: searchIcon;
@@ -390,7 +490,7 @@ export default {
   margin: 5px;
   grid-auto-flow: row;
   cursor: pointer;
-  grid-template-areas: 'searchImg searchProductsInfo';
+  grid-template-areas: "searchImg searchProductsInfo";
   grid-template-columns: 0.2fr 0.5fr;
   gap: 10px;
   & img {
@@ -401,7 +501,7 @@ export default {
 }
 .searchProductsInfo {
   display: grid;
-  grid-template-areas: 'searchProductTitle' 'searchProductPice';
+  grid-template-areas: "searchProductTitle" "searchProductPice";
 }
 .searchProductTitle {
   grid-area: searchProductTitle;
@@ -420,7 +520,7 @@ export default {
   grid-auto-flow: column;
   gap: 5px;
   grid-template-columns: 0.3fr 1.5fr;
-  grid-template-areas: 'locationIcon locationInput';
+  grid-template-areas: "locationIcon locationInput";
   & i {
     grid-area: locationIcon;
     align-self: center;
@@ -454,7 +554,7 @@ export default {
   height: 730px;
   margin-bottom: 92px;
   padding: 19px 293px 92px 292px;
-  grid-template-areas: 'sortWrapper' 'productsWrapper';
+  grid-template-areas: "sortWrapper" "productsWrapper";
 }
 .sortWrapper {
   grid-area: sortWrapper;
@@ -519,7 +619,7 @@ export default {
 .productInfo {
   display: grid;
   width: 90%;
-  grid-template-areas: 'itemName' 'itemPrice';
+  grid-template-areas: "itemName" "itemPrice";
   gap: 7px;
   justify-items: start;
   margin-left: 12px;

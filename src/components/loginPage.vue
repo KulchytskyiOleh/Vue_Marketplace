@@ -11,7 +11,7 @@
         <div class="passwordWrapper">
           <label for="password">PASSWORD</label>
           <div class="passwordInputWrapper">
-            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" required minlength="6"/>
+            <input :type="showPassword ? 'text' : 'password'" v-model="userPassword" required minlength="6" />
             <i @click="passwordToggle">
               <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -57,40 +57,53 @@ export default {
       userEmail: '',
       userPassword: '',
       userLoginData: [],
-      successLogin: false,
+      successValidation: false,
+      successLogIn: false,
       userError: '',
+      failedTriesCounter: 1,
     };
   },
   methods: {
     passwordToggle() {
       this.showPassword = !this.showPassword;
     },
-    loginSubmit() {
+    async loginSubmit() {
       this.userValidation();
-      if (this.successLogin) {
+      if (this.successValidation) {
         if (this.userEmail.length > 1 && this.userPassword.length > 1) {
           axios
             .post('https://agile-everglades-70301.herokuapp.com/api/login', {
               email: this.userEmail,
               password: this.userPassword,
             })
-            .then((resp) => console.log('resp data', resp.data))
-            .catch((err) => console.log(err, 'error'));
+            .then((resp) => {
+              if (resp.data) {
+                console.log(resp, 'resp');
+                this.userEmail = '';
+                this.userPassword = '';
+                this.$router.push({ path: '/', name: 'Home' });
+              }
+            })
+            .catch((err) => {
+              if (err) {
+                this.failedTriesCounter++;
+              }
+              console.log(err.message, 'error');
+            });
+          console.log(this.successLogIn, 'this.successLogIn');
         }
-        this.userEmail = '';
-        this.userPassword = '';
       }
     },
     userValidation() {
-      if (this.userEmail.length < 11 || this.userPassword.length < 6) return this.successLogin, (this.userError = 'to short login or password');
-      if (!this.userEmail || !this.userPassword) return this.successLogin;
+      if (this.userEmail.length < 11 || this.userPassword.length < 6) return this.successValidation, (this.userError = 'to short login or password');
+      if (!this.userEmail || !this.userPassword) return this.successValidation;
       if (!this.userEmail) {
         return (this.userError = 'need to fill this field');
       }
       if (!this.userPassword) {
         return (this.userError = 'need to fill this field');
       } else {
-        this.successLogin = true;
+        this.successValidation = true;
       }
     },
   },
