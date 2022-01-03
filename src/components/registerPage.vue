@@ -53,14 +53,11 @@
       <section class="hasAccountWrapper">
         <p>
           I already have an account,
-          <router-link to="/login">
-            LOG IN
-          </router-link>
+          <router-link to="/login"> LOG IN </router-link>
         </p>
         <router-view />
       </section>
     </main>
-
     <Footer />
   </div>
 </template>
@@ -68,8 +65,9 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import axios from 'axios';
-
+// import axios from 'axios';
+import apiService from '@/api/apiService.js';
+const { testGetReq, testPostReq, userRegistration } = apiService;
 export default {
   name: 'registerPage',
   components: {
@@ -93,17 +91,28 @@ export default {
     showPasswordToggle(type = 'showPassword') {
       this[type] = !this[type];
     },
+    testFunc() {
+      return testGetReq().then((resp) => console.log(resp.data));
+    },
+    testPost() {
+      return testPostReq(this.userEmail, this.userFullName, this.userPassword).then((response) => {
+        console.log(response);
+      });
+    },
     registerSubmit() {
       this.passwordCheck();
       if (this.success) {
-        axios
-          .post('https://agile-everglades-70301.herokuapp.com/api/register', {
-            email: `${this.userEmail}`,
-            name: `${this.userFullName}`,
-            password: `${this.userPassword}`,
-          })
-          .then((resp) => console.log('resp data', resp.data))
-          .catch((err) => console.log(err, 'err'));
+        // axios
+        //   .post('https://agile-everglades-70301.herokuapp.com/api/register', {
+        //     email: `${this.userEmail}`,
+        //     name: `${this.userFullName}`,
+        //     password: `${this.userPassword}`,
+        //   })
+
+        // userRegistration(this.userEmail, this.userFullName, this.userPassword)
+        // .then((resp) => console.log('resp data', resp.data))
+        // .catch((err) => console.log(err, 'err'));
+        this.$store.dispatch('register/createNewUser', this.userEmail, this.userFullName, this.userPassword);
         this.userEmail = '';
         this.userFullName = '';
         this.userPassword = '';
