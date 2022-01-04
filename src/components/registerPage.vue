@@ -56,6 +56,9 @@
           <router-link to="/login"> LOG IN </router-link>
         </p>
         <router-view />
+        <template v-if="checkError()">
+          <p>{{ errorMessage }}</p>
+        </template>
       </section>
     </main>
     <Footer />
@@ -66,8 +69,8 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 // import axios from 'axios';
-import apiService from '@/api/apiService.js';
-const { testGetReq, testPostReq, userRegistration } = apiService;
+// import apiService from '@/api/apiService.js';
+// const { testGetReq, testPostReq, userRegistration } = apiService;
 export default {
   name: 'registerPage',
   components: {
@@ -84,21 +87,40 @@ export default {
       success: false,
       showPassword: false,
       showPasswordAgain: false,
+      error: false,
+      errorMessage: '',
     };
   },
-  // computed: {},
+  // computed: {
+  //   checkError() {
+  //     this.error = this.$store.state.userRegister.errorMsg;
+  //     if (this.error) {
+  //       return this.error;
+  //     }
+  //   },
+  // },
   methods: {
     showPasswordToggle(type = 'showPassword') {
       this[type] = !this[type];
     },
-    testFunc() {
-      return testGetReq().then((resp) => console.log(resp.data));
+    checkError() {
+      this.errorMessage = this.$store.state.userRegister.errorMsg;
+      if (Boolean(this.errorMessage)) {
+        return this.error;
+      } else {
+        this.error = true;
+        this.errorMessage;
+      }
+      return this.error
     },
-    testPost() {
-      return testPostReq(this.userEmail, this.userFullName, this.userPassword).then((response) => {
-        console.log(response);
-      });
-    },
+    // testFunc() {
+    //   return testGetReq().then((resp) => console.log(resp.data));
+    // },
+    // testPost() {
+    //   return testPostReq(this.userEmail, this.userFullName, this.userPassword).then((response) => {
+    //     console.log(response);
+    //   });
+    // },
     registerSubmit() {
       this.passwordCheck();
       if (this.success) {
@@ -108,11 +130,13 @@ export default {
         //     name: `${this.userFullName}`,
         //     password: `${this.userPassword}`,
         //   })
-
         // userRegistration(this.userEmail, this.userFullName, this.userPassword)
         // .then((resp) => console.log('resp data', resp.data))
         // .catch((err) => console.log(err, 'err'));
-        this.$store.dispatch('register/createNewUser', this.userEmail, this.userFullName, this.userPassword);
+        // test= {
+        //   userEmail:this.userEmail, userFullName:this.userFullName, userPassword:this.userPassword
+        // }
+        this.$store.dispatch('userRegister/createNewUser', [this.userEmail, this.userFullName, this.userPassword]);
         this.userEmail = '';
         this.userFullName = '';
         this.userPassword = '';

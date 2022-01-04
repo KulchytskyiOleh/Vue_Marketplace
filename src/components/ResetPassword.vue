@@ -39,12 +39,14 @@ export default {
     resetPassword() {
       this.passwordCheck();
       if (this.success) {
-        axios
-          .post('https://agile-everglades-70301.herokuapp.com/api/restoreEmail', {
-            email: `${this.userEmail}`,
-          })
-          .then((resp) => console.log('resp data', resp.data))
-          .catch((err) => console.log(err, 'err'));
+        console.log('test')
+        this.$store.dispatch('restorePas/restorePassword',this.userEmail)
+        // axios
+        //   .post('https://agile-everglades-70301.herokuapp.com/api/restoreEmail', {
+        //     email: `${this.userEmail}`,
+        //   })
+        //   .then((resp) => console.log('resp data', resp.data))
+        //   .catch((err) => console.log(err, 'err'));
         this.userEmail = '';
       }
     },

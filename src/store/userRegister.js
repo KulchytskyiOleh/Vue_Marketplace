@@ -2,28 +2,30 @@ import httpReq from '../api/httpRequests.js';
 export const namespaced = true;
 export const state = {
   email: '',
-  userName: '',
+  name: '',
   password: '',
+  errorMsg: '',
 };
-export const mutation = {
-  USER_REGISTRATION(state, payload) {
-    state.email = payload.email;
-    state.userName = payload.userName;
-    state.password = payload.password;
+export const mutations = {
+  USER_REGISTRATION(state, { email, userName, password }) {
+    state.email = email;
+    state.userName = userName;
+    state.password = password;
   },
 };
 export const actions = {
-  createNewUser({ commit }, email, userName, password) {
-    httpReq
+  createNewUser({ commit, state }, [email, userName, password]) {
+    return httpReq
       .post('/register', {
         email,
-        userName,
+        name: userName,
         password,
       })
       .then(() => {
-        commit(USER_REGISTRATION, payload);
-        dispatch('notification/add', notification, { root: true });
+        commit('USER_REGISTRATION', { email, userName, password });
       })
-      .catch((error) => console.log(error, 'in catch'));
+      .catch((error) => {
+        state.errorMsg = error.response.data.errors.email[0];
+      });
   },
 };

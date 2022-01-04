@@ -19,12 +19,15 @@ export const actions = {
         password,
       })
       .then(() => {
-        commit(USER_LOGIN, payload);
+        commit('USER_LOGIN', payload);
         state.isLogin = true;
         console.log('test');
         console.log(state.isLogin, 'state.isLogin');
         dispatch('notification/add', notification, { root: true });
       })
-      .catch((error) => console.log(error, 'in catch'));
+      // .then((resp) => console.log(resp, 'resp'))
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
