@@ -71,28 +71,34 @@ export default {
       this.userValidation();
       if (this.successValidation) {
         if (this.userEmail.length > 1 && this.userPassword.length > 1) {
-          axios
-            .post('https://agile-everglades-70301.herokuapp.com/api/login', {
-              email: this.userEmail,
-              password: this.userPassword,
-            })
-          // this.$store.dispatch('login/loginUser', this.userEmail, this.userPassword);
+          // axios
+          //   .post('https://agile-everglades-70301.herokuapp.com/api/login', {
+          //     email: this.userEmail,
+          //     password: this.userPassword,
+          //   })
+          
+            this.$store.dispatch('login/loginUser', [this.userEmail, this.userPassword]).then(() => {
+              this.userEmail = '';
+              this.userPassword = '';
+              this.$router.push({ path: '/', name: 'Home' });
+            });
+         
+          console.log(this.$store.state.login.isLogin, 'this.$store.state.login.isLogin');
           // console.log(this.$store.state.login.isLogin, 'store');
-          .then((resp) => {
-            if (resp.data) {
-              console.log(resp, 'resp');
-          this.userEmail = '';
-          this.userPassword = '';
-          this.$router.push({ path: '/', name: 'Home' });
-          }
-          })
-              .catch((err) => {
-                if (err) {
-                  this.failedTriesCounter++;
-                }
-                console.log(err.message, 'error');
-              });
-            console.log(this.successLogIn, 'this.successLogIn');
+          // .then((resp) => {
+          // if (resp.data) {
+          // console.log(resp, 'resp');
+
+          // this.$router.push({ path: '/', name: 'Home' });
+          // }
+          // })
+          //       .catch((err) => {
+          //         if (err) {
+          //           this.failedTriesCounter++;
+          //         }
+          //         console.log(err.message, 'error');
+          //       });
+          //     console.log(this.successLogIn, 'this.successLogIn');
         }
       }
     },
