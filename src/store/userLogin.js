@@ -13,25 +13,33 @@ export const mutations = {
 };
 export const actions = {
   loginUser({ commit }, [email, password]) {
-    httpReq
-      .post('/login', {
-        email,
-        password,
-      })
-      .then((resp) => {
-        if (resp) {
-          console.log(resp, 'resp');
-          commit('USER_LOGIN', { email, password });
-          state.isLogin = true;
-        }
-      })
-      // .then(() => {
-      //   commit('USER_LOGIN', { email, password });
-      //   state.isLogin = true;
-      //   console.log(state.isLogin, 'state.isLogin');
-      // })
-      .catch((error) => {
-        // error.response.data.message
-      });
+    state.isLogin = false;
+    return (
+      httpReq
+        .post('/login', {
+          email,
+          password,
+        })
+        .then((resp) => {
+          if (resp) {
+            commit('USER_LOGIN', { email, password });
+            state.isLogin = true;
+          }
+        })
+        // .then(() => {
+        //   commit('USER_LOGIN', { email, password });
+        //   state.isLogin = true;
+        //   console.log(state.isLogin, 'state.isLogin');
+        // })
+        .catch((error) => {
+          state.isLogin = false;
+          console.log(error.response.data.message);
+        })
+    );
+  },
+};
+export const getters = {
+  userSuccessLogIn() {
+    return state.isLogin;
   },
 };

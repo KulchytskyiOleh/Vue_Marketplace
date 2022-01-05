@@ -43,7 +43,8 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import axios from 'axios';
+import { mapGetters } from 'vuex';
+// import axios from 'axios';
 
 export default {
   components: {
@@ -63,6 +64,9 @@ export default {
       failedTriesCounter: 1,
     };
   },
+  computed: {
+    ...mapGetters({ isUserLogin: 'login/userSuccessLogIn' }),
+  },
   methods: {
     passwordToggle() {
       this.showPassword = !this.showPassword;
@@ -76,13 +80,18 @@ export default {
           //     email: this.userEmail,
           //     password: this.userPassword,
           //   })
-          
-            this.$store.dispatch('login/loginUser', [this.userEmail, this.userPassword]).then(() => {
+
+          this.$store.dispatch('login/loginUser', [this.userEmail, this.userPassword]).then(() => {
+            if (this.isUserLogin) {
               this.userEmail = '';
               this.userPassword = '';
               this.$router.push({ path: '/', name: 'Home' });
-            });
-         
+            } else {
+              this.userEmail;
+              this.userPassword;
+            }
+          });
+          console.log(this.isUserLogin, 'test login');
           console.log(this.$store.state.login.isLogin, 'this.$store.state.login.isLogin');
           // console.log(this.$store.state.login.isLogin, 'store');
           // .then((resp) => {
